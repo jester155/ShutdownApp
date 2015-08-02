@@ -24,6 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShutdownForm));
 			this.abortButton = new System.Windows.Forms.Button();
 			this.startButton = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
@@ -171,6 +172,7 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.abortButton);
 			this.Controls.Add(this.startButton);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ShutdownForm";
 			this.Text = "ShutdownForm";
 			this.ResumeLayout(false);
