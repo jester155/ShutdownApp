@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DreamLib.Time;
 using System.Diagnostics;
@@ -16,6 +9,7 @@ namespace ShutdownApp {
 		ShutdownProcess ShutdownProcess;
 
 		public ShutdownForm() {
+
 			InitializeComponent();
 			ComboBoxTime.SelectedIndex = 0;
 			ComboBoxOptions.SelectedIndex = 0;
@@ -23,22 +17,26 @@ namespace ShutdownApp {
 		}
 
 		private void startButton_Click(object sender , EventArgs e) {
+
 			this.ShutdownProcess = this.CreateProcess();
 			ShutdownProcess.Start();
+
 			this.LblTimeLeft.Text = this.ShutdownProcess.Time.ToString();
+
 			tmrShutdown.Enabled = true;
 			tmrShutdown.Start();
+
 			this.BtnAbort.Enabled = true;
 			this.BtnStart.Enabled = false;
 		}
 
 		private ShutdownProcess CreateProcess() {
-			var sdCommand = string.Empty;
 
 			ShutdownProcess process = null;
 
 			try {
 				process = new ShutdownProcess() {
+
 					Option = this.CheckBoxHybrid.Checked ? ShutdownOptions.Hybrid : (ShutdownOptions) this.ComboBoxOptions.SelectedIndex ,
 					TimeUnit = (TimeUnits) this.ComboBoxTime.SelectedIndex ,
 					Time = Convert.ToDouble(this.TbSetTimeText.Text)
@@ -52,6 +50,7 @@ namespace ShutdownApp {
 		}
 
 		private void tmrShutdown_Tick(object sender , EventArgs e) {
+
 			if(this.LblTimeLeft.Text != "0") {
 				this.LblTimeLeft.Text = (Convert.ToInt32(this.LblTimeLeft.Text) - 1).ToString();
 			}
@@ -63,6 +62,7 @@ namespace ShutdownApp {
 		}
 
 		private void abortButton_Click(object sender , EventArgs e) {
+
 			this.BtnStart.Enabled = true;
 			this.BtnAbort.Enabled = false;
 
