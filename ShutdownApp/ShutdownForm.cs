@@ -7,6 +7,7 @@ namespace ShutdownApp {
 	public partial class ShutdownForm : Form {
 
 		ShutdownProcess ShutdownProcess;
+		const string DEFAULT_TIME = "10";
 
 		public ShutdownForm() {
 
@@ -14,20 +15,25 @@ namespace ShutdownApp {
 			ComboBoxTime.SelectedIndex = 0;
 			ComboBoxOptions.SelectedIndex = 0;
 			this.LblTimeUnit.Text = ComboBoxTime.Text;
+			this.TbSetTimeText.Text = DEFAULT_TIME;
 		}
 
 		private void startButton_Click(object sender , EventArgs e) {
 
 			this.ShutdownProcess = this.CreateProcess();
-			ShutdownProcess.Start();
 
-			this.LblTimeLeft.Text = this.ShutdownProcess.Time.ToString();
+			if(this.ShutdownProcess != null) {
 
-			tmrShutdown.Enabled = true;
-			tmrShutdown.Start();
+				ShutdownProcess.Start();
+				this.LblTimeLeft.Text = this.ShutdownProcess.Time.ToString();
 
-			this.BtnAbort.Enabled = true;
-			this.BtnStart.Enabled = false;
+				tmrShutdown.Enabled = true;
+				tmrShutdown.Start();
+
+				this.BtnAbort.Enabled = true;
+				this.BtnStart.Enabled = false;
+			}
+			else this.TbSetTimeText.Text = DEFAULT_TIME;
 		}
 
 		private ShutdownProcess CreateProcess() {

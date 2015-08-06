@@ -40,6 +40,7 @@
 			// 
 			// BtnAbort
 			// 
+			this.BtnAbort.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.BtnAbort.Enabled = false;
 			this.BtnAbort.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnAbort.ForeColor = System.Drawing.Color.Maroon;
@@ -169,8 +170,10 @@
 			// 
 			// ShutdownForm
 			// 
+			this.AcceptButton = this.BtnStart;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.BtnAbort;
 			this.ClientSize = new System.Drawing.Size(447, 215);
 			this.Controls.Add(this.CheckBoxHybrid);
 			this.Controls.Add(this.LblTimeLeft);
