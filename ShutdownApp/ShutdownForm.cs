@@ -17,19 +17,19 @@ namespace ShutdownApp {
 
 		public ShutdownForm() {
 			InitializeComponent();
-			timeComboBox.SelectedIndex = 0;
-			optionsComboBox.SelectedIndex = 0;
-			this.lblTimeUnit.Text = timeComboBox.Text;
+			ComboBoxTime.SelectedIndex = 0;
+			ComboBoxOptions.SelectedIndex = 0;
+			this.LblTimeUnit.Text = ComboBoxTime.Text;
 		}
 
 		private void startButton_Click(object sender , EventArgs e) {
 			this.ShutdownProcess = this.CreateProcess();
 			ShutdownProcess.Start();
-			this.timeLeftLabel.Text = this.ShutdownProcess.Time.ToString();
+			this.LblTimeLeft.Text = this.ShutdownProcess.Time.ToString();
 			tmrShutdown.Enabled = true;
 			tmrShutdown.Start();
-			this.abortButton.Enabled = true;
-			this.startButton.Enabled = false;
+			this.BtnAbort.Enabled = true;
+			this.BtnStart.Enabled = false;
 		}
 
 		private ShutdownProcess CreateProcess() {
@@ -39,9 +39,9 @@ namespace ShutdownApp {
 
 			try {
 				process = new ShutdownProcess() {
-					Option = this.cbHybrid.Checked ? ShutdownOptions.Hybrid : (ShutdownOptions) this.optionsComboBox.SelectedIndex ,
-					TimeUnit = (TimeUnits) this.timeComboBox.SelectedIndex ,
-					Time = Convert.ToDouble(this.setTimeText.Text)
+					Option = this.CheckBoxHybrid.Checked ? ShutdownOptions.Hybrid : (ShutdownOptions) this.ComboBoxOptions.SelectedIndex ,
+					TimeUnit = (TimeUnits) this.ComboBoxTime.SelectedIndex ,
+					Time = Convert.ToDouble(this.TbSetTimeText.Text)
 				};
 			}
 			catch(Exception) {
@@ -52,8 +52,8 @@ namespace ShutdownApp {
 		}
 
 		private void tmrShutdown_Tick(object sender , EventArgs e) {
-			if(this.timeLeftLabel.Text != "0") {
-				this.timeLeftLabel.Text = (Convert.ToInt32(this.timeLeftLabel.Text) - 1).ToString();
+			if(this.LblTimeLeft.Text != "0") {
+				this.LblTimeLeft.Text = (Convert.ToInt32(this.LblTimeLeft.Text) - 1).ToString();
 			}
 			else {
 				this.tmrShutdown.Stop();
@@ -63,12 +63,12 @@ namespace ShutdownApp {
 		}
 
 		private void abortButton_Click(object sender , EventArgs e) {
-			this.startButton.Enabled = true;
-			this.abortButton.Enabled = false;
+			this.BtnStart.Enabled = true;
+			this.BtnAbort.Enabled = false;
 
 			this.tmrShutdown.Stop();
 
-			this.timeLeftLabel.Text = "0";
+			this.LblTimeLeft.Text = "0";
 
 			this.ShutdownProcess.Abort();
 		}
