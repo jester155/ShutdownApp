@@ -12,68 +12,43 @@ using System.Diagnostics;
 
 namespace ShutdownApp {
 	public partial class ShutdownForm : Form {
+
+		ShutdownProcess ShutdownProcess;
+
 		public ShutdownForm() {
 			InitializeComponent();
 			timeComboBox.SelectedIndex = 0;
 			optionsComboBox.SelectedIndex = 0;
-			this.label3.Text = timeComboBox.Text;
+			this.lblTimeUnit.Text = timeComboBox.Text;
 		}
 
 		private void startButton_Click(object sender , EventArgs e) {
-			this.timeLeftLabel.Text = this.setTimeText.Text;
-			var command = this.CreateProcessString();
+			this.ShutdownProcess = this.CreateProcess();
+			ShutdownProcess.Start();
+			this.timeLeftLabel.Text = this.ShutdownProcess.Time.ToString();
 			tmrShutdown.Enabled = true;
 			tmrShutdown.Start();
-			Process.Start("shutdown" , command);
 			this.abortButton.Enabled = true;
 			this.startButton.Enabled = false;
 		}
 
-		private string CreateProcessString() {
+		private ShutdownProcess CreateProcess() {
 			var sdCommand = string.Empty;
 
-			if(this.cbHybrid.Checked) {
-				sdCommand = "/hybrid";
-			}
-			else {
-				switch(this.optionsComboBox.SelectedIndex) {
-					case 0:
-						sdCommand += "/s ";
-						break;
-					case 1:
-						sdCommand += "/r ";
-						break;
-					case 2:
-						sdCommand += "/l ";
-						break;
-					case 3:
-						sdCommand += "/h ";
-						break;
-				}
-			}
-			var time = 0.0;
+			ShutdownProcess process = null;
 
-			switch(this.timeComboBox.SelectedIndex) {
-				case 0:
-					double.TryParse(this.setTimeText.Text , out time);
-					break;
-				case 1:
-					double.TryParse(this.setTimeText.Text , out time);
-					time = TimeConverter.MinutesToSeconds(time);
-					break;
-				case 2:
-					double.TryParse(this.setTimeText.Text , out time);
-					time = TimeConverter.HoursToSeconds(time);
-					break;
-				default:
-					break;
+			try {
+				process = new ShutdownProcess() {
+					Option = this.cbHybrid.Checked ? ShutdownOptions.Hybrid : (ShutdownOptions) this.optionsComboBox.SelectedIndex ,
+					TimeUnit = (TimeUnits) this.timeComboBox.SelectedIndex ,
+					Time = Convert.ToDouble(this.setTimeText.Text)
+				};
+			}
+			catch(Exception) {
+				MessageBox.Show("Could not create shutdown process.");
 			}
 
-			sdCommand += "/t " + time;
-
-			this.timeLeftLabel.Text = time.ToString();
-
-			return sdCommand;
+			return process != null ? process : null;
 		}
 
 		private void tmrShutdown_Tick(object sender , EventArgs e) {
@@ -95,7 +70,7 @@ namespace ShutdownApp {
 
 			this.timeLeftLabel.Text = "0";
 
-			Process.Start("shutdown" , "-a");
+			this.ShutdownProcess.Abort();
 		}
 	}
 }

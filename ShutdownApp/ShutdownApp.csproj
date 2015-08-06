@@ -54,10 +54,10 @@
     <ApplicationIcon>Power-Shutdown.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>83EF52E1309F9DD7ABBC20A0D41DE11C148FD8FE</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C818C8B1DAB83356E5E5F1D7A14024FDFC6B03B1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ShutdownApp_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ShutdownApp_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -89,6 +89,7 @@
     <Compile Include="ShutdownForm.Designer.cs">
       <DependentUpon>ShutdownForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShutdownProcess.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -111,6 +112,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="ShutdownApp_1_TemporaryKey.pfx" />
     <None Include="ShutdownApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

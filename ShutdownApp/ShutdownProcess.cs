@@ -20,23 +20,28 @@ namespace ShutdownApp {
 
 		public ShutdownOptions Option { get; set; }
 		public TimeUnits TimeUnit { get; set; }
-		public string TimeString { get; set; }
+		public double Time { get; set; }
+		public string ProcessString { get; set; }
 
 
 		public ShutdownProcess() { }
 
-		public ShutdownProcess(ShutdownOptions option , TimeUnits timeUnit , string timeString) {
+		public ShutdownProcess(ShutdownOptions option , TimeUnits timeUnit , double time) {
 			this.Option = option;
 			this.TimeUnit = timeUnit;
-			this.TimeString = timeString;
+			this.Time = time;
 		}
 
 		public void Abort() {
 			Process.Start("shutdown" , "-a");
 		}
 
-		public string BuildArgString() {
-			return string.Format("shutdown {0} {1}" , GetShutdownArg() , GetTimeArg());
+		public void Start() {
+			Process.Start("shutdown" , this.GetArgString());
+		}
+
+		public string GetArgString() {
+			return string.Format("{0} {1}" , GetShutdownArg() , GetTimeArg());
 		}
 
 		private string GetShutdownArg() {
@@ -64,21 +69,15 @@ namespace ShutdownApp {
 		}
 
 		private string GetTimeArg() {
-
-			var timeArg = string.Empty;
-			var time = 0.0;
 			try {
-
-				double.TryParse(this.TimeString , out time);
-
 				switch(this.TimeUnit) {
 					case TimeUnits.Seconds:
 						break;
 					case TimeUnits.Minutes:
-						time = TimeConverter.MinutesToSeconds(time);
+						this.Time = TimeConverter.MinutesToSeconds(this.Time);
 						break;
 					case TimeUnits.Hours:
-						time = TimeConverter.HoursToSeconds(time);
+						this.Time = TimeConverter.HoursToSeconds(this.Time);
 						break;
 				}
 			}
@@ -86,9 +85,7 @@ namespace ShutdownApp {
 				return string.Empty;
 			}
 
-			timeArg += string.Format("/t {0}" , time);
-
-			return timeArg;
+			return string.Format("/t {0}" , this.Time);
 		}
 	}
 }
