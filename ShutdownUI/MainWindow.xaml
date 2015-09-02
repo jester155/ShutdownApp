@@ -16,8 +16,10 @@
 		<!-- Text boxes for numeric input of time -->
 		<TextBox Name="TbHours" HorizontalAlignment="Left" Height="23" Margin="134,48,0,0" TextWrapping="Wrap" 
 				 Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="2.091,0.478" PreviewTextInput="PreviewTextInputRegexValidation"/>
-		<TextBox Name="TbMinutes" HorizontalAlignment="Left" Height="23" Margin="134,76,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565"/>
-		<TextBox Name="TbSeconds" HorizontalAlignment="Left" Height="23" Margin="134,104,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565"/>
+		<TextBox Name="TbMinutes" HorizontalAlignment="Left" Height="23" Margin="134,76,0,0" TextWrapping="Wrap" 
+				 Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565" PreviewTextInput="PreviewTextInputRegexValidation"/>
+		<TextBox Name="TbSeconds" HorizontalAlignment="Left" Height="23" Margin="134,104,0,0" TextWrapping="Wrap" 
+				 Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565" PreviewTextInput="PreviewTextInputRegexValidation"/>
 
 		<!-- Selectable combo boxes with shutdown options -->
 		<ComboBox Name="CbShutdownOptions" HorizontalAlignment="Left" Margin="106,19,0,0" VerticalAlignment="Top" Width="120"/>
