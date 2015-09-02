@@ -1,11 +1,29 @@
 ﻿<Window x:Class="ShutdownUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="224" Width="411">
-	<Grid>
-		<Button Content="Start" HorizontalAlignment="Left" Margin="319,136,0,0" VerticalAlignment="Top" Width="74" Height="47"/>
-		<Label Content="Set Time" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-		<TextBox HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
-		<ComboBox Name="CbTimeValues" HorizontalAlignment="Left" Margin="212,14,0,0" VerticalAlignment="Top" Width="120" />
+        Title="MainWindow" Height="199" Width="275" WindowStyle="SingleBorderWindow" Background="#333" ResizeMode="NoResize">
+	<Grid Margin="0,0,4,0">
+		<!-- Action buttons -->
+		<Button Name="BtnAction" Content="Start" HorizontalAlignment="Left" Margin="30,66,0,0" 
+				VerticalAlignment="Top" Width="76" Height="51" FontSize="18" Foreground="BlueViolet" Click="BtnActionClick"/>
+
+		<!-- Form labels -->
+		<Label Content="Set Time" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="AntiqueWhite" />
+		<Label Content="Hours" HorizontalAlignment="Left" Margin="172,44,0,0" VerticalAlignment="Top" Foreground="AntiqueWhite"/>
+		<Label Content="Minutes" HorizontalAlignment="Left" Margin="172,73,0,0" VerticalAlignment="Top" Foreground="AntiqueWhite"/>
+		<Label Content="Seconds" HorizontalAlignment="Left" Margin="172,101,0,0" VerticalAlignment="Top" Foreground="AntiqueWhite"/>
+
+		<!-- Text boxes for numeric input of time -->
+		<TextBox Name="TbHours" HorizontalAlignment="Left" Height="23" Margin="134,48,0,0" TextWrapping="Wrap" 
+				 Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="2.091,0.478" PreviewTextInput="PreviewTextInputRegexValidation"/>
+		<TextBox Name="TbMinutes" HorizontalAlignment="Left" Height="23" Margin="134,76,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565"/>
+		<TextBox Name="TbSeconds" HorizontalAlignment="Left" Height="23" Margin="134,104,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="4.212,0.565"/>
+
+		<!-- Selectable combo boxes with shutdown options -->
+		<ComboBox Name="CbShutdownOptions" HorizontalAlignment="Left" Margin="106,19,0,0" VerticalAlignment="Top" Width="120"/>
+		
+		<!-- Shutdown Progress Information -->
+		<ProgressBar HorizontalAlignment="Left" Height="10" Margin="10,140,0,0" VerticalAlignment="Top" Width="233"/>
+
 	</Grid>
 </Window>
