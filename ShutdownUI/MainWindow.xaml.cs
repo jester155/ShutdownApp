@@ -43,9 +43,9 @@ namespace Shutdown.Ui {
 		/// Default constructor for creating a MainForm.
 		/// </summary>
 		public MainWindow() {
+			InitializeComponent();
 			this.TextBoxes = new TextBox[] { this.TbHours , this.TbMinutes , this.TbSeconds };
 			this.TextBoxNames = this.TextBoxes.Select(t => t.Name).ToArray();
-			InitializeComponent();
 			CbShutdownOptions.ItemsSource = Enum.GetValues(typeof(ShutdownOptions)).Cast<ShutdownOptions>();
 			CbShutdownOptions.SelectedIndex = 0;
 			this.IsShuttingDown = false;
@@ -60,7 +60,7 @@ namespace Shutdown.Ui {
 		/// <param name="text">The string to evaluate.</param>
 		/// <returns>Returns true if the text does not contain numbers.</returns>
 		private static bool IsTextAllowed(string text) {
-			Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
+			Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
 			return !regex.IsMatch(text);
 		}
 
@@ -90,7 +90,6 @@ namespace Shutdown.Ui {
 		private void PreviewTextInputRegexValidation(object sender , TextCompositionEventArgs e) {
 			var senderUpCast = sender as TextBox;
 			e.Handled = !IsTextAllowed(e.Text);
-			MessageBox.Show(senderUpCast.Name);
 		}
 	}
 }
