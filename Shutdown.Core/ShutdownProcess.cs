@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
-using DreamLib.Time;
 
-namespace ShutdownUI {
+namespace Shutdown.Core {
 
 	/// <summary>
 	/// Options for various shutdown methods.
 	/// </summary>
 	public enum ShutdownOptions {
-		Shutdown , restart , LogOff , Hybernate , Hybrid
-	}
-
-	/// <summary>
-	/// Units of time for conversion.
-	/// </summary>
-	public enum TimeUnits {
-		Seconds , Minutes , Hours
+		Shutdown , 
+		Restart ,
+		LogOff , 
+		Hybernate , 
+		Hybrid
 	}
 
 	/// <summary>
@@ -29,14 +25,9 @@ namespace ShutdownUI {
 		public ShutdownOptions Option { get; set; }
 
 		/// <summary>
-		/// Time unit to shutdown by.
-		/// </summary>
-		public TimeUnits TimeUnit { get; set; }
-
-		/// <summary>
 		/// The count down time to perform the shutdown. This should be converted to seconds in this.GetTimeArg()
 		/// </summary>
-		public double Time { get; set; }
+		public Time Time { get; set; }
 
 		/// <summary>
 		/// Default constructor.
@@ -76,7 +67,7 @@ namespace ShutdownUI {
 				case ShutdownOptions.Shutdown:
 					shutdownOption = "/s";
 					break;
-				case ShutdownOptions.restart:
+				case ShutdownOptions.Restart:
 					shutdownOption = "/r";
 					break;
 				case ShutdownOptions.LogOff:
@@ -98,23 +89,7 @@ namespace ShutdownUI {
 		/// </summary>
 		/// <returns>Returns an argument for a given time.</returns>
 		private string GetTimeArg() {
-			try {
-				switch(this.TimeUnit) {
-					case TimeUnits.Seconds:
-						break;
-					case TimeUnits.Minutes:
-						this.Time = TimeConverter.MinutesToSeconds(this.Time);
-						break;
-					case TimeUnits.Hours:
-						this.Time = TimeConverter.HoursToSeconds(this.Time);
-						break;
-				}
-			}
-			catch(Exception) {
-				return string.Empty;
-			}
-
-			return string.Format("/t {0}" , this.Time);
+			return string.Format("/t {0}" , this.Time.AllToSeconds);
 		}
 	}
 }

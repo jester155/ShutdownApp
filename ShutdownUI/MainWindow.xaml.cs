@@ -12,10 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DreamLib.Time;
 using System.Text.RegularExpressions;
+using Shutdown.Core;
 
-namespace ShutdownUI {
+namespace Shutdown.Ui {
+	
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -24,14 +25,33 @@ namespace ShutdownUI {
 		/// <summary>
 		/// Indicates that the app is shutting down.
 		/// </summary>
-		public bool IsShuttingDown { get; set; }
+		private bool IsShuttingDown { get; set; }
 
+		/// <summary>
+		/// An array of all textboxes.
+		/// </summary>
+		/// Here we use it for comparison purposes.
+		private TextBox[] TextBoxes;
+
+		/// <summary>
+		/// An array of all the textbox names.
+		/// </summary>
+		/// Here we use it forcomparison purposes.
+		private string[] TextBoxNames;
+
+		/// <summary>
+		/// Default constructor for creating a MainForm.
+		/// </summary>
 		public MainWindow() {
+			this.TextBoxes = new TextBox[] { this.TbHours , this.TbMinutes , this.TbSeconds };
+			this.TextBoxNames = this.TextBoxes.Select(t => t.Name).ToArray();
 			InitializeComponent();
 			CbShutdownOptions.ItemsSource = Enum.GetValues(typeof(ShutdownOptions)).Cast<ShutdownOptions>();
 			CbShutdownOptions.SelectedIndex = 0;
 			this.IsShuttingDown = false;
 			this.SetActionButtonForeground();
+			this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+			this.ResizeMode = System.Windows.ResizeMode.CanMinimize;
 		}
 
 		/// <summary>
@@ -68,7 +88,9 @@ namespace ShutdownUI {
 		/// <param name="sender">the sender object</param>
 		/// <param name="e">The even arguments passed in from the action.</param>
 		private void PreviewTextInputRegexValidation(object sender , TextCompositionEventArgs e) {
+			var senderUpCast = sender as TextBox;
 			e.Handled = !IsTextAllowed(e.Text);
+			MessageBox.Show(senderUpCast.Name);
 		}
 	}
 }
