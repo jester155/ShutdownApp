@@ -12,12 +12,12 @@ namespace Shutdown.Core {
 	public struct Time {
 
 		/// <summary>
-		/// Hour time interval.
+		/// Hours time interval.
 		/// </summary>
 		public short Hours { get; set; }
 		
 		/// <summary>
-		/// Minute time interval.
+		/// Minutes time interval.
 		/// </summary>
 		public short Minutes { get; set; }
 		

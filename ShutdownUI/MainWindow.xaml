@@ -25,7 +25,8 @@
 		<ComboBox Name="CbShutdownOptions" HorizontalAlignment="Left" Margin="108,10,0,0" VerticalAlignment="Top" Width="137"/>
 
 		<!-- Shutdown Progress Information -->
-		<ProgressBar HorizontalAlignment="Left" Height="10" Margin="10,140,0,0" VerticalAlignment="Top" Width="233"/>
+		<ProgressBar Name="PbShutdown" HorizontalAlignment="Left" Height="10" Margin="10,140,0,0" VerticalAlignment="Top"
+					 Width="233" Minimum="0"/>
 
 	</Grid>
 </Window>
