@@ -26,7 +26,7 @@ namespace Shutdown.Core {
 		/// </summary>
 		public short Seconds { get; set; }
 
-		public int AllToSeconds { 
+		public int TotalSeconds { 
 			get {
 				return Hours != null && Minutes != null && Seconds != null ?
 					(Hours * 60 * 60) + (Minutes * 60) + Seconds : -1;

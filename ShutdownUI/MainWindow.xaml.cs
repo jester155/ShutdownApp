@@ -75,7 +75,7 @@ namespace Shutdown.Ui {
 			DoubleAnimation doubleAnimation =
 				new DoubleAnimation(this.ElapsedTime , this.ElapsedTime + 1 , duration);
 
-			if(++this.ElapsedTime <= this.ShutdownProcess.Time.AllToSeconds) {
+			if(++this.ElapsedTime <= this.ShutdownProcess.Time.TotalSeconds) {
 				this.Dispatcher.Invoke(() => {
 					this.PbShutdown.BeginAnimation(ProgressBar.ValueProperty , doubleAnimation);
 				});
@@ -112,7 +112,7 @@ namespace Shutdown.Ui {
 
 				this.ShutdownProcess.Start();
 				this.ShutdownTimer.Start();
-				this.PbShutdown.Maximum = this.ShutdownProcess.Time.AllToSeconds;
+				this.PbShutdown.Maximum = this.ShutdownProcess.Time.TotalSeconds;
 			}
 			else { this.Resetvalues(); }
 		}
