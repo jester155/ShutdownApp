@@ -9,7 +9,7 @@ namespace Shutdown.Core {
 	/// <summary>
 	/// Time struct to represent hours minutes and seconds.
 	/// </summary>
-	struct Time {
+	public struct Time {
 
 		/// <summary>
 		/// Hour time interval.

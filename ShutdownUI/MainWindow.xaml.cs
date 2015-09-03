@@ -23,6 +23,11 @@ namespace Shutdown.Ui {
 	public partial class MainWindow : Window {
 
 		/// <summary>
+		/// The active and default shutdown process for the form.
+		/// </summary>
+		private ShutdownProcess ShutdownProcess = new ShutdownProcess();
+
+		/// <summary>
 		/// Indicates that the app is shutting down.
 		/// </summary>
 		private bool IsShuttingDown { get; set; }
@@ -72,6 +77,19 @@ namespace Shutdown.Ui {
 		private void BtnActionClick(object sender , RoutedEventArgs e) {
 			this.IsShuttingDown = !IsShuttingDown;
 			this.SetActionButtonForeground();
+			if(this.IsShuttingDown) {
+				this.ShutdownProcess = new ShutdownProcess {
+					Option = (ShutdownOptions) this.CbShutdownOptions.SelectedItem ,
+					Time = new Time {
+						Hours = (short) Convert.ToInt16(this.TbHours.Text) ,
+						Minutes = (short) Convert.ToInt16(this.TbMinutes.Text) ,
+						Seconds = (short) Convert.ToInt16(this.TbSeconds)
+					}
+				};
+
+				this.ShutdownProcess.Start();
+			}
+			else { this.ShutdownProcess.Abort(); }
 		}
 
 		/// <summary>

@@ -17,7 +17,7 @@ namespace Shutdown.Core {
 	/// <summary>
 	/// Shutdown Process class used to create the shutdown process that will be passes to the System.Diagnostics.Process.Start method.
 	/// </summary>
-	class ShutdownProcess {
+	public class ShutdownProcess {
 
 		/// <summary>
 		/// Shutdown option.
