@@ -61,6 +61,7 @@ namespace Shutdown.Ui {
 			this.SetActionButtonForeground();
 			this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
 			this.ResizeMode = System.Windows.ResizeMode.CanMinimize;
+
 			this.ShutdownTimer = new Timer(100);
 			this.ShutdownTimer.Elapsed += TimerTick;
 			this.ElapsedTime = 0;
