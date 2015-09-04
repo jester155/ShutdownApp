@@ -110,6 +110,11 @@ namespace Shutdown.Ui {
 		/// <param name="sender">The sender object of the evet.</param>
 		/// <param name="e">The even arguments passed in from an action.</param>
 		private void BtnActionClick(object sender , RoutedEventArgs e) {
+
+			/*
+			 * Shutting down state is switched. The foreground is the appropriately chosen based on the state.
+			 * Perform the appropriate actions based on the shutdown state.
+			 */
 			this.IsShuttingDown = !IsShuttingDown;
 			this.SetActionButtonForeground();
 			if(this.IsShuttingDown) {
