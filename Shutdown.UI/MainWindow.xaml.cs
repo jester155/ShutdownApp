@@ -71,6 +71,11 @@ namespace Shutdown.Ui {
 
 		#region Methods
 
+		/// <summary>
+		/// The Timer Elapse event handler which increments the progress bar appropriately.
+		/// </summary>
+		/// <param name="sender">The sending object</param>
+		/// <param name="e">the elapsed event arguments.</param>
 		private void TimerTick(object sender , ElapsedEventArgs e) {
 			this.Dispatcher.Invoke(() => {
 				this.PbShutdown.Value =
