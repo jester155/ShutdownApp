@@ -89,7 +89,7 @@ namespace Shutdown.Core {
 		/// </summary>
 		/// <returns>Returns an argument for a given time.</returns>
 		private string GetTimeArg() {
-			return string.Format("/t {0}" , this.Time.AllToSeconds);
+			return string.Format("/t {0}" , this.Time.TotalSeconds);
 		}
 	}
 }

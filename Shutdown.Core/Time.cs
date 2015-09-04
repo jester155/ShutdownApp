@@ -12,24 +12,29 @@ namespace Shutdown.Core {
 	public struct Time {
 
 		/// <summary>
-		/// Hour time interval.
+		/// Hours time interval.
 		/// </summary>
 		public short Hours { get; set; }
-		
+
 		/// <summary>
-		/// Minute time interval.
+		/// Minutes time interval.
 		/// </summary>
 		public short Minutes { get; set; }
-		
+
 		/// <summary>
 		/// Seconds time interval.
 		/// </summary>
 		public short Seconds { get; set; }
 
-		public int AllToSeconds { 
+		public uint TotalSeconds {
 			get {
-				return Hours != null && Minutes != null && Seconds != null ?
-					(Hours * 60 * 60) + (Minutes * 60) + Seconds : -1;
+				return Convert.ToUInt32((Hours * 60 * 60) + (Minutes * 60) + Seconds);
+			}
+		}
+
+		public ulong TotalMiliseconds {
+			get {
+				return Convert.ToUInt64(this.TotalSeconds * 1000);
 			}
 		}
 	}

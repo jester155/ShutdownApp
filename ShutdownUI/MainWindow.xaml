@@ -25,7 +25,13 @@
 		<ComboBox Name="CbShutdownOptions" HorizontalAlignment="Left" Margin="108,10,0,0" VerticalAlignment="Top" Width="137"/>
 
 		<!-- Shutdown Progress Information -->
-		<ProgressBar HorizontalAlignment="Left" Height="10" Margin="10,140,0,0" VerticalAlignment="Top" Width="233"/>
+		<ProgressBar Name="PbShutdown" HorizontalAlignment="Left" Height="10" Margin="10,140,0,0" VerticalAlignment="Top"
+					 Width="233" Minimum="0"/>
+		
+		<!-- Test labels only -->
+		<Label Name="Numerator" FontSize="10" Content="Label" HorizontalAlignment="Left" Margin="71,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.005,0.695"/>
+		<Label Name="Denominator" FontSize="10" Content="Label" HorizontalAlignment="Left" Margin="105,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.005,0.695"/>
+		<Label Name="Percentage" FontSize="10" Content="Label" HorizontalAlignment="Left" Margin="139,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.005,0.695"/>
 
 	</Grid>
 </Window>

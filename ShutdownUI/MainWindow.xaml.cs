@@ -14,13 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using Shutdown.Core;
+using System.Timers;
+using System.Windows.Media.Animation;
 
 namespace Shutdown.Ui {
-	
+
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window {
+
+		#region Properties
 
 		/// <summary>
 		/// The active and default shutdown process for the form.
@@ -33,30 +37,49 @@ namespace Shutdown.Ui {
 		private bool IsShuttingDown { get; set; }
 
 		/// <summary>
-		/// An array of all textboxes.
+		/// The timer used to track shutdown in the program.
 		/// </summary>
-		/// Here we use it for comparison purposes.
-		private TextBox[] TextBoxes;
+		public Timer ShutdownTimer { get; set; }
 
 		/// <summary>
-		/// An array of all the textbox names.
+		/// Elapsed time in seconds once the shutdown process has benn started.
 		/// </summary>
-		/// Here we use it forcomparison purposes.
-		private string[] TextBoxNames;
+		public uint ElapsedTime { get; set; }
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Default constructor for creating a MainForm.
 		/// </summary>
 		public MainWindow() {
 			InitializeComponent();
-			this.TextBoxes = new TextBox[] { this.TbHours , this.TbMinutes , this.TbSeconds };
-			this.TextBoxNames = this.TextBoxes.Select(t => t.Name).ToArray();
 			CbShutdownOptions.ItemsSource = Enum.GetValues(typeof(ShutdownOptions)).Cast<ShutdownOptions>();
 			CbShutdownOptions.SelectedIndex = 0;
 			this.IsShuttingDown = false;
 			this.SetActionButtonForeground();
 			this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
 			this.ResizeMode = System.Windows.ResizeMode.CanMinimize;
+			this.ShutdownTimer = new Timer(100);
+			this.ShutdownTimer.Elapsed += TimerTick;
+			this.ElapsedTime = 0;
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void TimerTick(object sender , ElapsedEventArgs e) {
+			this.Dispatcher.Invoke(() => {
+				this.PbShutdown.Value =
+					((double) ++this.ElapsedTime / ((double) this.ShutdownProcess.Time.TotalMiliseconds / 100)) * 100;
+
+				this.Numerator.Content = this.ElapsedTime.ToString();
+				this.Denominator.Content = (this.ShutdownProcess.Time.TotalMiliseconds / 100).ToString();
+
+				this.Percentage.Content = this.PbShutdown.Value.ToString();
+			});
 		}
 
 		/// <summary>
@@ -81,15 +104,27 @@ namespace Shutdown.Ui {
 				this.ShutdownProcess = new ShutdownProcess {
 					Option = (ShutdownOptions) this.CbShutdownOptions.SelectedItem ,
 					Time = new Time {
-						Hours = (short) Convert.ToInt16(this.TbHours.Text) ,
-						Minutes = (short) Convert.ToInt16(this.TbMinutes.Text) ,
-						Seconds = (short) Convert.ToInt16(this.TbSeconds)
+						Hours = short.Parse(this.TbHours.Text) ,
+						Minutes = short.Parse(this.TbMinutes.Text) ,
+						Seconds = short.Parse(this.TbSeconds.Text)
 					}
 				};
 
 				this.ShutdownProcess.Start();
+				this.ShutdownTimer.Start();
+				this.PbShutdown.Maximum = 100;
 			}
-			else { this.ShutdownProcess.Abort(); }
+			else { this.Resetvalues(); }
+		}
+
+		/// <summary>
+		/// Resets all values to their defaults.
+		/// </summary>
+		public void Resetvalues() {
+			this.ShutdownProcess.Abort();
+			this.ShutdownTimer.Stop();
+			this.ElapsedTime = 0;
+			this.PbShutdown.Value = 0;
 		}
 
 		/// <summary>
@@ -109,5 +144,7 @@ namespace Shutdown.Ui {
 			var senderUpCast = sender as TextBox;
 			e.Handled = !IsTextAllowed(e.Text);
 		}
+
+		#endregion
 	}
 }
