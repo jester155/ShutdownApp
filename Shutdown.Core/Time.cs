@@ -26,7 +26,6 @@ namespace Shutdown.Core {
 		/// </summary>
 		public short Seconds { get; set; }
 
-<<<<<<< HEAD
 		public uint TotalSeconds {
 			get {
 				return Convert.ToUInt32((Hours * 60 * 60) + (Minutes * 60) + Seconds);
@@ -34,9 +33,6 @@ namespace Shutdown.Core {
 		}
 
 		public ulong TotalMiliseconds {
-=======
-		public int TotalSeconds { 
->>>>>>> 5aeb1697d9854494897a60fbd940402a29cc109a
 			get {
 				return Convert.ToUInt64(this.TotalSeconds * 1000);
 			}
