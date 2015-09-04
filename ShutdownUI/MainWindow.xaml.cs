@@ -73,12 +73,18 @@ namespace Shutdown.Ui {
 		private void TimerTick(object sender , ElapsedEventArgs e) {
 			this.Dispatcher.Invoke(() => {
 				this.PbShutdown.Value =
-					((double) ++this.ElapsedTime / ((double) this.ShutdownProcess.Time.TotalMiliseconds / 100)) * 100;
+					100 - Math.Ceiling(
+					((double) ++this.ElapsedTime /
+					((double) this.ShutdownProcess.Time.TotalMiliseconds / 100))
+					* 100);
 
-				this.Numerator.Content = this.ElapsedTime.ToString();
-				this.Denominator.Content = (this.ShutdownProcess.Time.TotalMiliseconds / 100).ToString();
-
-				this.Percentage.Content = this.PbShutdown.Value.ToString();
+				/* Test labels. this must be uncommented in the wpf source code 
+				 * 
+				 * this.Numerator.Content = this.ElapsedTime.ToString();
+				 * this.Denominator.Content = (this.ShutdownProcess.Time.TotalMiliseconds / 100).ToString();
+				 * 
+				 * this.Percentage.Content = Math.Ceiling(this.PbShutdown.Value).ToString();
+				 */
 			});
 		}
 
@@ -110,9 +116,10 @@ namespace Shutdown.Ui {
 					}
 				};
 
-				this.ShutdownProcess.Start();
 				this.ShutdownTimer.Start();
+				this.ShutdownProcess.Start();
 				this.PbShutdown.Maximum = 100;
+				this.PbShutdown.Value = 100;
 			}
 			else { this.Resetvalues(); }
 		}
